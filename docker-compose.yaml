@@ -1,0 +1,23 @@
+# Docker Compose for local development and testing
+
+version: '3.8'
+
+services:
+  dongap-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dongap-bot
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      DATABASE_PATH: /data/dongap.db
+      LOG_LEVEL: INFO
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
+    networks:
+      - dongap-network
+
+networks:
+  dongap-network:
+    driver: bridge
